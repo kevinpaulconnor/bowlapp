@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 // probably a better way to do this
 import unm from './logos/unm.png'
+import schex from './users/schex.jpg'
 import './App.css';
 
 class App extends Component {
@@ -25,20 +26,34 @@ class Scoreline extends Component {
 		render() {
 			return (
 			<div className="Scoreline"> 
-				{/*<User/>
+				<Userline/>
 				<Matchup/>
-				<User/>*/}
+				<Userline/>
 			</div>
 		);
 	}
 }
 
-class User extends Component {
-
+class Userline extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.state.userImage = props.userImage;
+		this.state.status = props.status;
+	}
+	render() {
+		return (
+			<img src={schex} className="User-image" alt="userImage" />
+		);
+	}
 }
 
 class Matchup extends Component {
-
+	render() {
+		return (
+			<div className="Matchup-container">matchup</div>
+		);
+	}
 }
 
 class Team extends Component {
