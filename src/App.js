@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 // probably a better way to do this
 import unm from './logos/unm.png'
-import schex from './users/schex.jpg'
+import schexImage from './users/schex.jpg'
 import './App.css';
 
+var USERS = {
+	schex: createUser(schexImage)
+}
+
+function createUser(image) {
+	return ({
+		image: image
+	});
+}
 class App extends Component {
   render() {
     return (
@@ -16,7 +25,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Scoreline />
+        <Scoreline users={USERS}/>
       </div>
     );
   }
@@ -26,24 +35,18 @@ class Scoreline extends Component {
 		render() {
 			return (
 			<div className="Scoreline"> 
-				<Userline/>
+				<Userline user={this.props.users.schex}/>
 				<Matchup/>
-				<Userline/>
+				<Userline user={this.props.users.schex}/>
 			</div>
 		);
 	}
 }
 
 class Userline extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-		this.state.userImage = props.userImage;
-		this.state.status = props.status;
-	}
 	render() {
 		return (
-			<img src={schex} className="User-image" alt="userImage" />
+			<img src={this.props.user.image} className="User-image" alt="userImage" />
 		);
 	}
 }
