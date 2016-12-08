@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-// probably a better way to do this
+// probably a better way to import these images
 import unm from './logos/unm.png'
 import schexImage from './users/schex.jpg'
+import danImage from './users/dan.jpg'
+import patImage from './users/pat.jpg'
+import kevinImage from './users/kevin.jpg'
 import './App.css';
 
 var USERS = {
-	schex: createUser(schexImage)
+	schex: createUser(schexImage),
+	dan: createUser(danImage),
+	pat: createUser(patImage),
+	kevin: createUser(kevinImage),
 }
 
 function createUser(image) {
@@ -37,7 +43,7 @@ class Scoreline extends Component {
 			<div className="Scoreline"> 
 				<Userline user={this.props.users.schex}/>
 				<Matchup/>
-				<Userline user={this.props.users.schex}/>
+				<Userline user={this.props.users.pat}/>
 			</div>
 		);
 	}
