@@ -24,7 +24,15 @@
 }
 
 .Matchup-container {
-	display: inline;
+	display: inline-block;
+}
+
+.Game-container {
+	background-color: blue;
+}
+
+.Team-container {
+	background-color: green;
 }
 
 @keyframes App-logo-spin {
