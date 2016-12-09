@@ -28,6 +28,7 @@
 }
 
 .Game-container {
+	display: inline-block;
 	background-color: blue;
 }
 

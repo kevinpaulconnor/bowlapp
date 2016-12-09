@@ -86,7 +86,7 @@ class Scoreline extends Component {
 class Userline extends Component {
 	render() {
 		return (
-			<img src={this.props.user.image} className="User-image" alt="userImage" />
+			<span className="User"><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
 		);
 	}
 }
@@ -95,9 +95,9 @@ class Matchup extends Component {
 	render() {
 		return (
 			<div className="Matchup-container">
-			{<Team team={this.props.game.team1}/>}
+			<Team team={this.props.game.team1}/>
 			<Game game={this.props.game} />
-			{/*<Team />*/}
+			<Team team={this.props.game.team2}/>
 			</div>
 		);
 	}
@@ -106,11 +106,11 @@ class Matchup extends Component {
 class Team extends Component {
 	render() {
 		return (
-			<div className="Team-container">
+			<span className="Team-container">
 			<span className="Team-score">-</span>
 			<span className="Team-name">{this.props.team.name}</span>
 			<img src={this.props.team.logo} className="Team-logo"/>
-			</div>
+			</span>
 		);
 	}
 }
