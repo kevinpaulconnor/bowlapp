@@ -178,9 +178,9 @@ class Matchup extends Component {
 	render() {
 		return (
 			<div className="Matchup-container">
-			<Team team={this.props.game.team1}/>
+			<Team team={this.props.game.team1} flip={false}/>
 			<Game game={this.props.game} />
-			<Team team={this.props.game.team2}/>
+			<Team team={this.props.game.team2} flip={true}/>
 			</div>
 		);
 	}
@@ -188,12 +188,17 @@ class Matchup extends Component {
 
 class Team extends Component {
 	render() {
-		return (
-			<span className="Team-container">
-			<span className="Team-score">-</span>
-			<span className="Team-name">{this.props.team.name}</span>
+		var items = [
+			<span className="Team-score">-</span>,
+			<span className="Team-name">{this.props.team.name}</span>,
 			<img src={this.props.team.logo} className="Team-logo"/>
-			</span>
+		];
+		if (this.props.flip) {
+			items = items.reverse();
+		}
+
+		return (
+			<span className="Team-container">{items}</span>
 		);
 	}
 }
