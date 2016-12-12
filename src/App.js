@@ -190,6 +190,7 @@ class Team extends Component {
 	render() {
 		var items = [
 			<span className="Team-score">-</span>,
+			// really simplifies display css to not include the team name
 			/*<span className="Team-name">{this.props.team.name}</span>,*/
 			<img src={this.props.team.logo} className="Team-logo"/>
 		];

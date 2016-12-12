@@ -25,13 +25,16 @@
 }
 
 .Matchup-container {
-	width: 550px;
-	display: inline-block;
+	flex-grow: 2;
+	display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Game-container {
+	flex-grow: 1;
+	flex-shrink: 0;
 	display: inline-block;
-	background-color: blue;
 	font-size: 20px;
 }
 
@@ -40,7 +43,13 @@
 }
 
 .Team-container {
-	background-color: green;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Team-container img {
+	margin: 0 20px;
 }
 
 .Team-score {
@@ -54,9 +63,8 @@
 }
 
 .Scoreline {
-	background-color: red;
 	margin: 0 auto 5px;
-	width: 1200px;
+	width: 1000px;
 	display: flex;
   justify-content: center;
   align-items: center;
