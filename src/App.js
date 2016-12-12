@@ -111,8 +111,8 @@ function createTeam(name, logo){
 var GAMES = [
 	createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
 		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex),
-		createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
-		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex)
+		createBowlGame("Las Vegas Bowl", "Sam Boyd Stadium", "Las Vegas, NV", "Dec 17, 2016 12:30", "ABC",
+		TEAMS.houston, TEAMS.sdsu, USERS.pat, USERS.dan)
 ];
 
 function createBowlGame(name, stadium, location, datestring, tv, team1, team2, team1User, team2User) {
@@ -128,6 +128,8 @@ function createBowlGame(name, stadium, location, datestring, tv, team1, team2, t
 		team2User: team2User
 	});
 }
+
+/*-----------Components---------------*/
 
 class App extends Component {
   render() {
@@ -146,14 +148,21 @@ class App extends Component {
 }
 
 class Scoreline extends Component {
+
 		render() {
+			var rows = [];
+			this.props.games.forEach( function(game) {
+				rows.push(
+					<div className="Scoreline"> 
+						<Userline user={game.team1User}/>
+						<Matchup game={game}/>
+						<Userline user={game.team2User}/>
+					</div>
+				);
+			})
 			return (
-			<div className="Scoreline"> 
-				<Userline user={this.props.games[0].team1User}/>
-				<Matchup game={this.props.games[0]}/>
-				<Userline user={this.props.games[0].team2User}/>
-			</div>
-		);
+					<div className="Scoreline-container">{rows}</div>
+			);
 	}
 }
 
