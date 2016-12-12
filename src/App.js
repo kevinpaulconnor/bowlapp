@@ -40,7 +40,7 @@ var TEAMS = {
 	georgia: createTeam("Texas-San Antonio", require('./logos/georgia.png')),
 	geotech: createTeam("Texas-San Antonio", require('./logos/geotech.png')),
 	hawaii: createTeam("Texas-San Antonio", require('./logos/hawaii.png')),
-	houston: createTeam("Texas-San Antonio", require('./logos/houston.png')),
+	houston: createTeam("Houston", require('./logos/houston.png')),
 	idaho: createTeam("Texas-San Antonio", require('./logos/idaho.png')),
 	indiana: createTeam("Texas-San Antonio", require('./logos/indiana.png')),
 	iowa: createTeam("Texas-San Antonio", require('./logos/iowa.png')),
@@ -71,7 +71,7 @@ var TEAMS = {
 	okstate: createTeam("Texas-San Antonio", require('./logos/okstate.png')),
 	pennstate: createTeam("Texas-San Antonio", require('./logos/pennstate.png')),
 	pitt: createTeam("Texas-San Antonio", require('./logos/pitt.png')),
-	sdsu: createTeam("Texas-San Antonio", require('./logos/sdsu.png')),
+	sdsu: createTeam("San Diego State", require('./logos/sdsu.png')),
 	southalabama: createTeam("Texas-San Antonio", require('./logos/southalabama.png')),
 	southcarolina: createTeam("Texas-San Antonio", require('./logos/southcarolina.png')),
 	southmississippi: createTeam("Texas-San Antonio", require('./logos/southmississippi.png')),
@@ -190,7 +190,7 @@ class Team extends Component {
 	render() {
 		var items = [
 			<span className="Team-score">-</span>,
-			<span className="Team-name">{this.props.team.name}</span>,
+			/*<span className="Team-name">{this.props.team.name}</span>,*/
 			<img src={this.props.team.logo} className="Team-logo"/>
 		];
 		if (this.props.flip) {
@@ -206,7 +206,6 @@ class Team extends Component {
 class Game extends Component {
 		
 	render() {
-		// doesn't seem like this should really be in the render
 		function dateFormat(date) {
 			var options = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 			return date.toLocaleString('en-US', options)
