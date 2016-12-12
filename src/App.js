@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 // probably a better way to import these images
-import logoUnm from './logos/unm.png'
-import logoUtsa from './logos/utsa.png'
-import schexImage from './users/schex.jpg'
-import danImage from './users/dan.jpg'
-import patImage from './users/pat.jpg'
-import kevinImage from './users/kevin.jpg'
 import './App.css';
 
 var USERS = {
-	schex: createUser(schexImage),
-	dan: createUser(danImage),
-	pat: createUser(patImage),
-	kevin: createUser(kevinImage),
+	schex: createUser(require('./users/schex.jpg')),
+	dan: createUser(require('./users/dan.jpg')),
+	pat: createUser(require('./users/pat.jpg')),
+	kevin: createUser(require('./users/kevin.jpg')),
 }
 
 function createUser(image) {
@@ -23,8 +17,8 @@ function createUser(image) {
 }
 
 var TEAMS = {
-	newmexico: createTeam('New Mexico', logoUnm),
-	utsa: createTeam("Texas-San Antonio", logoUtsa)
+	newmexico: createTeam('New Mexico', require('./logos/unm.png')),
+	utsa: createTeam("Texas-San Antonio", require('./logos/utsa.png'))
 }
 
 function createTeam(name, logo){
@@ -37,6 +31,8 @@ function createTeam(name, logo){
 
 var GAMES = [
 	createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
+		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex),
+		createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
 		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex)
 ];
 
@@ -59,8 +55,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logoUnm} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+					<h2>Welcome to React</h2>
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
