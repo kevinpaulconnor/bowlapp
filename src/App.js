@@ -155,7 +155,9 @@ class Scoreline extends Component {
 				rows.push(
 					<div className="Scoreline"> 
 						<Userline user={game.team1User}/>
-						<Matchup game={game}/>
+						<Team team={game.team1} flip={false}/>
+						<Game game={game} />
+						<Team team={game.team2} flip={true}/>
 						<Userline user={game.team2User}/>
 					</div>
 				);
@@ -170,18 +172,6 @@ class Userline extends Component {
 	render() {
 		return (
 			<span className="User"><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
-		);
-	}
-}
-
-class Matchup extends Component {
-	render() {
-		return (
-			<div className="Matchup-container">
-			<Team team={this.props.game.team1} flip={false}/>
-			<Game game={this.props.game} />
-			<Team team={this.props.game.team2} flip={true}/>
-			</div>
 		);
 	}
 }
