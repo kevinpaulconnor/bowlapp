@@ -98,7 +98,8 @@ var TEAMS = {
 function createTeam(name, logo){
 	return({
 		name: name,
-		logo: logo
+		logo: logo,
+		score: Math.floor(Math.random() * (50 - 0)) + 0
 	});
 
 }
@@ -111,7 +112,7 @@ function createBowlGame(name, stadium, location, datestring, tv, team1, team2, t
 		date: new Date(datestring),
 		tv: tv,
 		team1: team1,
-		team2, team2,
+		team2: team2,
 		team1User: team1User,
 		team2User: team2User
 	});

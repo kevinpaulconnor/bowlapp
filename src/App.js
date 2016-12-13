@@ -15,6 +15,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <button name="getscores">Get Scores</button>
         <Scoreline games={this.props.games}/>
       </div>
     );
@@ -58,13 +59,12 @@ class Userline extends Component {
 }
 
 class Team extends Component {
-	constructor(props) {
+	/*constructor(props) {
 		super(props);
 		this.state = {
-			// still randomizing score for layout testing
-			score: Math.floor(Math.random() * (50 - 0)) + 0
+			score: "-";
 		}
-	}
+	}*/
 
 	render() {		
 		//FIXME: wet code
@@ -78,7 +78,7 @@ class Team extends Component {
 		}
 		
 		var items = [
-			<span className={scoreClassName}>{this.state.score}</span>,
+			<span className={scoreClassName}>{this.props.team.score}</span>,
 			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
 		];
 		if (this.props.flip) {
