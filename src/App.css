@@ -19,8 +19,7 @@
 }
 
 .User {
-	flex-basis: 50px;
-	flex-shrink: 2;
+	flex-basis: 150px;
 	border: 5px solid gray;
 
 }
@@ -29,17 +28,8 @@
 	vertical-align: bottom;
 }
 
-.Matchup-container {
-	flex-grow: 2;
-	display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .Game-container {
-	flex-basis: 200px;
-	flex-grow: 1;
-	display: inline-block;
+	flex-shrink: 0;
 	font-size: 2vw;
 }
 
@@ -49,7 +39,6 @@
 
 .Team-container {
 	flex-basis: 175px;
-	align-self: flex-start;
 	flex-grow: 2;
 	display: flex;
   justify-content: space-between;
@@ -57,15 +46,19 @@
 }
 
 .Team-imgcontainer {
-	flex-basis: 75px;
+	flex-basis: 50px;
 	flex-shrink: 2;
+	flex-grow: 10;
 }
 
-.Team-container.flip,
-.Team-imgcontainer {
+.Team-imgcontainer img{
+	float: right;
+	margin-right: 1vw
 }
 
-.Team-imgcontainer.flip {
+.Team-imgcontainer.flip img {
+	float: left;
+	margin-left: 1vw;
 }
 
 .Team-imgcontainer img,
