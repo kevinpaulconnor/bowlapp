@@ -177,10 +177,15 @@ class Userline extends Component {
 }
 
 class Team extends Component {
-	render() {
-		var score1 = Math.floor(Math.random() * (50 - 0)) + 0;
-		var score2 = Math.floor(Math.random() * (50 - 0)) + 0;
-		
+	constructor(props) {
+		super(props);
+		this.state = {
+			// still randomizing score for layout testing
+			score: Math.floor(Math.random() * (50 - 0)) + 0
+		}
+	}
+
+	render() {		
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
 		var scoreClassName = 'Team-score';
@@ -190,22 +195,13 @@ class Team extends Component {
 			scoreClassName += ' flip';
 			imgContainerClassName += ' flip';
 		}
+		
 		var items = [
-			<span className={scoreClassName}>{score1}</span>,
-			// really simplifies display css to not include the team name
-			/*<span className="Team-name">{this.props.team.name}</span>,*/
+			<span className={scoreClassName}>{this.state.score}</span>,
 			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
 		];
-		
-		// just for layout testing with random scores
 		if (this.props.flip) {
-			//items = items.reverse();
-			items = [	
-			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>,
-			<span className={scoreClassName}>{score2}</span>
-			// really simplifies display css to not include the team name
-			/*<span className="Team-name">{this.props.team.name}</span>,*/
-		];
+			items = items.reverse();
 		}
 
 		return (
