@@ -188,18 +188,38 @@ class Matchup extends Component {
 
 class Team extends Component {
 	render() {
+		var score1 = Math.floor(Math.random() * (50 - 0)) + 0;
+		var score2 = Math.floor(Math.random() * (50 - 0)) + 0;
+		
+		//FIXME: wet code
+		var containerClassName = 'Team-container';
+		var scoreClassName = 'Team-score';
+		var imgContainerClassName = 'Team-imgcontainer';
+		if (this.props.flip) {
+			containerClassName += ' flip';
+			scoreClassName += ' flip';
+			imgContainerClassName += ' flip';
+		}
 		var items = [
-			<span className="Team-score">-</span>,
+			<span className={scoreClassName}>{score1}</span>,
 			// really simplifies display css to not include the team name
 			/*<span className="Team-name">{this.props.team.name}</span>,*/
-			<img src={this.props.team.logo} className="Team-logo"/>
+			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
 		];
+		
+		// just for layout testing with random scores
 		if (this.props.flip) {
-			items = items.reverse();
+			//items = items.reverse();
+			items = [	
+			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>,
+			<span className={scoreClassName}>{score2}</span>
+			// really simplifies display css to not include the team name
+			/*<span className="Team-name">{this.props.team.name}</span>,*/
+		];
 		}
 
 		return (
-			<span className="Team-container">{items}</span>
+			<span className={containerClassName}>{items}</span>
 		);
 	}
 }
