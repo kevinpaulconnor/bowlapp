@@ -1,4 +1,3 @@
-export default function() {
 var USERS = {
 	schex: createUser(require('./users/schex.jpg')),
 	dan: createUser(require('./users/dan.jpg')),
@@ -11,7 +10,7 @@ function createUser(image) {
 		image: image
 	});
 }
-
+var teamId = 0;
 var TEAMS = {
 	// FIXME: use prop name in logo path
 	airforce: createTeam("The Air Force", require('./logos/airforce.png')),
@@ -96,12 +95,13 @@ var TEAMS = {
 }
 
 function createTeam(name, logo){
-	return({
+	teamId++;
+	var newTeam = {
 		name: name,
 		logo: logo,
-		score: Math.floor(Math.random() * (50 - 0)) + 0
-	});
-
+		id: teamId
+	}
+	return(newTeam);
 }
 
 function createBowlGame(name, stadium, location, datestring, tv, team1, team2, team1User, team2User) {
@@ -118,10 +118,13 @@ function createBowlGame(name, stadium, location, datestring, tv, team1, team2, t
 	});
 }
 
-return [
+const initialState = [
 	createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
 		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex),
 	createBowlGame("Las Vegas Bowl", "Sam Boyd Stadium", "Las Vegas, NV", "Dec 17, 2016 12:30", "ABC",
 		TEAMS.houston, TEAMS.sdsu, USERS.pat, USERS.dan)
 	];
+	
+export default function(state = initialState, action) {
+	return state;
 }

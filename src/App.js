@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from './actions';
 
 /*-----------Components---------------*/
 
@@ -15,35 +17,30 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button name="getscores">Get Scores</button>
-        <Scoreline games={this.props.games}/>
+        <button name="getscores" type="button" onClick={this.props.actions.requestScores}>Get Scores</button>
+        <Scoreline games={this.props.games} scores={this.props.scores}/>
       </div>
     );
   }
-}
-
-function mapStateToProps(state) {
-  console.log('log', state)
-  return {
-    games: state.games
-  };
 }
 
 class Scoreline extends Component {
 
 		render() {
 			var rows = [];
-			this.props.games.forEach( function(game) {
+
+			this.props.games.forEach( 
+				function(game) {
 				rows.push(
 					<div className="Scoreline"> 
 						<Userline user={game.team1User}/>
-						<Team team={game.team1} flip={false}/>
+						<Team team={game.team1} score={this.props.scores[game.team1.id]} flip={false}/>
 						<Game game={game} />
-						<Team team={game.team2} flip={true}/>
+						<Team team={game.team2} score={this.props.scores[game.team2.id]} flip={true}/>
 						<Userline user={game.team2User}/>
 					</div>
 				);
-			})
+			}.bind(this))
 			return (
 					<div className="Scoreline-container">{rows}</div>
 			);
@@ -59,12 +56,6 @@ class Userline extends Component {
 }
 
 class Team extends Component {
-	/*constructor(props) {
-		super(props);
-		this.state = {
-			score: "-";
-		}
-	}*/
 
 	render() {		
 		//FIXME: wet code
@@ -78,7 +69,7 @@ class Team extends Component {
 		}
 		
 		var items = [
-			<span className={scoreClassName}>{this.props.team.score}</span>,
+			<span className={scoreClassName}>{this.props.score}</span>,
 			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
 		];
 		if (this.props.flip) {
@@ -125,4 +116,17 @@ class UserTotal extends Component {
 
 }
 
-export default connect(mapStateToProps)(App);
+function mapStateToProps(state) {
+  return {
+    games: state.games,
+    scores: state.scores.data
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
