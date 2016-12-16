@@ -112,27 +112,47 @@ function createTeam(name, logo){
 	return(newTeam);
 }
 
-function createBowlGame(name, stadium, location, datestring, tv, team1, team2, team1User, team2User) {
+function getTVFromLocation() {
+	return 'ESPN';
+}
+
+function getNameFromLocation(location) {
+	return 'New Mexico Bowl';
+}
+
+function getUserForTeam(team) {
+	return USERS.schex;
+}
+
+function createBowlGame(game) {
 	return ({
-		name: name,
-		stadium: stadium,
-		location: location,
-		date: new Date(datestring),
-		tv: tv,
-		team1: team1,
-		team2: team2,
-		team1User: team1User,
-		team2User: team2User
+		name: getNameFromLocation(game.location),
+		location: game.location,
+		date: game.startDateDisplay + ' ' + game.startTime,
+		tv: getTVFromLocation(game/location),
+		team1: createTeam(game.home["name-seo"]),
+		team2: createTeam(game.away["name-seo"]),
+		team1User: getUserForTeam(game.home["name-seo"]),
+		team2User: getUserForTeam(game.away["name-seo"])
 	});
 }
 
-const initialState = [
-	createBowlGame("New Mexico Bowl", "University Stadium", "Albuquerque, NM", "Dec 17, 2016 11:00", "ESPN",
-		TEAMS.newmexico, TEAMS.utsa, USERS.kevin, USERS.schex),
-	createBowlGame("Las Vegas Bowl", "Sam Boyd Stadium", "Las Vegas, NV", "Dec 17, 2016 12:30", "ABC",
-		TEAMS.houston, TEAMS.sdsu, USERS.pat, USERS.dan)
-	];
+function initializeGames(games) {
+	var state = [];
+	games.ForEach( function(game) {
+		state.push(createBowlGame(game));
+	});
 	
+}
+
+const initialState = [];
+
 export default function(state = initialState, action) {
+	switch (action.type) {
+	case 'GAMES_PREPARED':
+		return { ...state, data: initializeGames(action.payload) }
+		break;
+	default:
+	}
 	return state;
 }
