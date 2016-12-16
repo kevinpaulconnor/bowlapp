@@ -7,9 +7,9 @@ for (var i = 1; i<=80; i++) {
 export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'REQUEST_UPDATE':
-		console.log(action.payload);
-		console.log(state);
-		return { ...state, data: action.payload }
+		//console.log(action.payload);
+		//console.log(state);
+		//return { ...state, data: action.payload }
 		break;
 	default:
 	}
