@@ -129,7 +129,7 @@ function createBowlGame(game) {
 		name: getNameFromLocation(game.location),
 		location: game.location,
 		date: game.startDateDisplay + ' ' + game.startTime,
-		tv: getTVFromLocation(game/location),
+		tv: getTVFromLocation(game.location),
 		team1: createTeam(game.home["name-seo"]),
 		team2: createTeam(game.away["name-seo"]),
 		team1User: getUserForTeam(game.home["name-seo"]),
@@ -139,18 +139,18 @@ function createBowlGame(game) {
 
 function initializeGames(games) {
 	var state = [];
-	games.ForEach( function(game) {
+	games.forEach( function(game) {
 		state.push(createBowlGame(game));
 	});
-	
+	return state;
 }
 
 const initialState = [];
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-	case 'GAMES_PREPARED':
-		return { ...state, data: initializeGames(action.payload) }
+	case 'INITIALIZE_GAMES':
+		return [ ...state = initializeGames(action.payload) ]
 		break;
 	default:
 	}

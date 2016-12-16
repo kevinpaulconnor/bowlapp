@@ -1,6 +1,5 @@
 import fetch from 'fetch-jsonp'
 export const INITIALIZE_GAMES = 'INITIALIZE_GAMES';
-export const GAMES_PREPARED = 'GAMES_PREPARED';
 export const REQUEST_UPDATE = 'REQUEST_UPDATE';
 
 const NCAAURL = 'http://data.ncaa.com/jsonp/scoreboard/football/fbs/2016/P/scoreboard.html'
@@ -16,18 +15,11 @@ export function initializeGames() {
 
 function _prepareGames(data) {
 	var games = [];
-	data.scoreboard.ForEach( function(item) {
-		games.append(item.games);
+	data.scoreboard.forEach( function(item) {
+		games = games.concat(item.games);
 	});
 	
-	gamesPrepared(games);
-}
-
-export function gamesPrepared(games) {
-	return {
-		type: 'GAMES_PREPARED',
-		payload: games
-	}
+	return games;
 }
 
 /*-------------------*/

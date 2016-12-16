@@ -17,7 +17,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button name="getscores" type="button" onClick={this.props.actions.requestUpdate}>Get Scores</button>
+        <button name="getscores" type="button" onClick={this.props.actions.initializeGames}>Get Scores</button>
         <Scoreline games={this.props.games} scores={this.props.scores}/>
       </div>
     );
@@ -85,19 +85,12 @@ class Team extends Component {
 class Game extends Component {
 		
 	render() {
-		function dateFormat(date) {
-			var options = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-			return date.toLocaleString('en-US', options)
-		}
-	
-		var formattedDate = dateFormat(this.props.game.date);
 		return (
 			<div className="Game-container">
-			<div className="Game-bowlname">{this.props.game.name}</div>
-			<div className="Game-stadium">{this.props.game.stadium}</div>			
+			<div className="Game-bowlname">{this.props.game.name}</div>		
 			<div className="Game-location">{this.props.game.location}</div>				
 			<div className="Game-tv">{this.props.game.tv}</div>
-			<div className="Game-date">{formattedDate}</div>
+			<div className="Game-date">{this.props.game.date}</div>
 			</div>
 		);
 	}
