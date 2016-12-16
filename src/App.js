@@ -87,7 +87,8 @@ class Game extends Component {
 	render() {
 		return (
 			<div className="Game-container">
-			<div className="Game-bowlname">{this.props.game.name}</div>		
+			<div className="Game-bowlname">{this.props.game.name}</div>
+			<div className="Game-stadium">{this.props.game.stadium}</div>
 			<div className="Game-location">{this.props.game.location}</div>				
 			<div className="Game-tv">{this.props.game.tv}</div>
 			<div className="Game-date">{this.props.game.date}</div>
