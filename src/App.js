@@ -17,7 +17,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button name="getscores" type="button" onClick={this.props.actions.requestScores}>Get Scores</button>
+        <button name="getscores" type="button" onClick={this.props.actions.requestUpdate}>Get Scores</button>
         <Scoreline games={this.props.games} scores={this.props.scores}/>
       </div>
     );
