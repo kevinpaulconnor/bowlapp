@@ -20,9 +20,9 @@ class App extends Component {
 		}
 		var renderRoot;
     if (this.props.otherView === "Standings") {
-	  	renderRoot = <Scoreline games={this.props.games} scores={this.props.scores}/>
+	  	renderRoot = <Scoreline games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
 		} else {
-			renderRoot = '';
+			renderRoot = <Standings users={this.props.users} />
 		}	
     return (
       <div className="App">
@@ -48,11 +48,11 @@ class Scoreline extends Component {
 				function(game) {
 				rows.push(
 					<div className="Scoreline"> 
-						<Userline user={game.team1User} gameState={game.gameState}/>
+						<Userline user={game.team1User} otherView={this.props.otherView} gameState={game.gameState}/>
 						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.id]} flip={false}/>
 						<Game game={game} />
 						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.id]} flip={true}/>
-						<Userline user={game.team2User} gameState={game.gameState}/>
+						<Userline user={game.team2User} otherView={this.props.otherView} gameState={game.gameState}/>
 					</div>
 				);
 			}.bind(this))
@@ -64,8 +64,8 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
-		var userClassName = 'User' + ' ' + this.props.gameState;
-	
+		var userClassName = 'User';
+		userClassName += (this.props.otherView === 'Standings') ? (' ' + this.props.gameState) : '';
 		return (
 			<span className={userClassName}><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
 		);
