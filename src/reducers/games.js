@@ -34,8 +34,23 @@ function getLogoForName(name) {
 	return require('./logos/'+ name +'.png');
 }
 
-function getTVFromLocation() {
-	return 'ESPN';
+function getTVFromHomeTeam(teamName) {
+	if (teamName === 'houston' || teamName === 'louisville' || teamName === 'iowa') {
+		return 'ABC';
+	} else if (teamName === 'arkansas-st'){
+		return 'CBSSN';
+	} else if (teamName === 'vanderbilt') {
+		return 'ESPN2';
+	} else if (teamName === 'utah') {
+		return 'FOX';
+	} else if (teamName === 'north-carolina') {
+		return 'CBS';
+	} else if (teamName === 'air-force') {
+		return 'ASN';
+	} 
+	else {
+		return 'ESPN';
+	}
 }
 
 function getNameFromLocation(location) {
@@ -55,7 +70,7 @@ function createBowlGame(game) {
 		stadium: stadiumName,
 		gameState: game.gameState,
 		date: game.startDateDisplay + ' ' + game.startTime,
-		tv: getTVFromLocation(game.location),
+		tv: getTVFromHomeTeam(game.home["nameSeo"]),
 		team1: createTeam(game.home["nameSeo"]),
 		team2: createTeam(game.away["nameSeo"]),
 		team1User: getUserForTeam(game.home["nameSeo"]),
