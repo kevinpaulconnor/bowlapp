@@ -44,11 +44,11 @@ class Scoreline extends Component {
 				function(game) {
 				rows.push(
 					<div className="Scoreline"> 
-						<Userline user={game.team1User}/>
+						<Userline user={game.team1User} gameState={game.gameState}/>
 						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.id]} flip={false}/>
 						<Game game={game} />
 						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.id]} flip={true}/>
-						<Userline user={game.team2User}/>
+						<Userline user={game.team2User} gameState={game.gameState}/>
 					</div>
 				);
 			}.bind(this))
@@ -60,8 +60,10 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
+		var userClassName = 'User' + ' ' + this.props.gameState;
+	
 		return (
-			<span className="User"><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
+			<span className={userClassName}><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
 		);
 	}
 }
