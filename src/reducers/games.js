@@ -63,7 +63,7 @@ function getLogoForName(name) {
 }
 
 function getTVFromHomeTeam(teamName) {
-	if (teamName === 'houston' || teamName === 'louisville' || teamName === 'iowa') {
+	if (teamName === 'san-diego-st' || teamName === 'louisville' || teamName === 'iowa') {
 		return 'ABC';
 	} else if (teamName === 'arkansas-st'){
 		return 'CBSSN';
