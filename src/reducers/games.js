@@ -53,19 +53,62 @@ function getTVFromHomeTeam(teamName) {
 	}
 }
 
-function getNameFromLocation(location) {
-	return 'New Mexico Bowl';
+function getBowlNameFromOrder(id) {
+	// fragile and hate this, but NCAA Api isn't including names
+	var orderedNames = [
+		'New Mexico Bowl',
+		'Las Vegas Bowl',
+		'Camellia Bowl',
+		'Cure Bowl',
+		'New Orleans Bowl',
+		'Miami Beach Bowl',
+		'Boca Raton Bowl',
+		'Poinsettia Bowl',
+		'Idaho Potato Bowl',
+		'Bahamas Bowl',
+		'Armed Forces Bowl',
+		'Dollar General Bowl',
+		'Hawaii Bowl',
+		'St. Petersburg Bowl',
+		'Quick Lane Bowl',
+		'Independence Bowl',
+		'Heart of Dallas Bowl',
+		'Military Bowl',
+		'Holiday Bowl',
+		'Cactus Bowl',
+		'Pinstripe Bowl',
+		'Russel Athletic Bowl',
+		'Foster Farms Bowl',
+		'Texas Bowl',
+		'Birmingham Bowl',
+		'Belk Bowl',
+		'Alamo Bowl',
+		'Liberty Bowl',
+		'Sun Bowl',
+		'Music City Bowl',
+		'Arizona Bowl',
+		'Orange Bowl',
+		'Fiesta Bowl',
+		'Citrus Bowl',
+		'Taxslayer Bowl',
+		'Peach Bowl',
+		'Outback Bowl',
+		'Cotton Bowl',
+		'Rose Bowl',
+		'Sugar Bowl'
+	];
+	return orderedNames[id] ? orderedNames[id] : 'Undefined Name';
 }
 
 function getUserForTeam(team) {
 	return USERS.schex;
 }
 
-function createBowlGame(game) {
+function createBowlGame(game, counter) {
 	var stadiumName = game.location.split(',',1);
 	var gameLocation = game.location.slice(stadiumName[0].length+2, game.location.length);
 	return ({
-		name: getNameFromLocation(game.location),
+		name: getBowlNameFromOrder(counter),
 		location: gameLocation,
 		stadium: stadiumName,
 		gameState: game.gameState,
@@ -81,8 +124,10 @@ function createBowlGame(game) {
 function initializeGames(games) {
 	teamId = 0;
 	var state = [];
+	var counter = 0;
 	games.forEach( function(game) {
-		state.push(createBowlGame(game));
+		state.push(createBowlGame(game, counter));
+		counter++;
 	});
 	return state;
 }
