@@ -31,6 +31,14 @@
 	border: 5px solid blue;
 }
 
+.User.winner {
+	border: 5px solid green;
+}
+
+.User.loser {
+	border: 5px solid red;
+}
+
 .User img {
 	vertical-align: bottom;
 }
@@ -88,6 +96,14 @@
 
 .Team-score.live {
 	color: blue;
+}
+
+.Team-score.winner {
+	color: green;
+}
+
+.Team-score.loser {
+	color: red;
 }
 
 .Team-name {
