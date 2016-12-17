@@ -48,11 +48,11 @@ class Scoreline extends Component {
 				function(game) {
 				rows.push(
 					<div className="Scoreline"> 
-						<Userline user={game.team1User} otherView={this.props.otherView} gameState={game.gameState}/>
+						<Userline user={game.team1User} gameState={game.gameState}/>
 						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.id]} flip={false}/>
 						<Game game={game} />
 						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.id]} flip={true}/>
-						<Userline user={game.team2User} otherView={this.props.otherView} gameState={game.gameState}/>
+						<Userline user={game.team2User} gameState={game.gameState}/>
 					</div>
 				);
 			}.bind(this))
@@ -65,7 +65,7 @@ class Scoreline extends Component {
 class Userline extends Component {
 	render() {
 		var userClassName = 'User';
-		userClassName += (this.props.otherView === 'Standings') ? (' ' + this.props.gameState) : '';
+		userClassName += (this.props.gameState) ? (' ' + this.props.gameState) : '';
 		return (
 			<span className={userClassName}><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
 		);
@@ -116,6 +116,16 @@ class Game extends Component {
 }
 
 class Standings extends Component {
+	render() {
+		var users = this.props.users.sort(function(a,b) {a.total > b.total});
+		var rows = [];
+		users.props.forEach( function(user) {
+			rows.push( <Userline user={user} />);
+		});
+		return(
+			{rows}
+		)
+	}
 
 }
 
@@ -129,6 +139,7 @@ class UserTotal extends Component {
 
 function mapStateToProps(state) {
   return {
+  	users: state.users,
     games: state.games,
     scores: state.scores,
     otherView: state.view.otherView
