@@ -1,13 +1,41 @@
 var USERS = {
-	schex: createUser(require('./users/schex.jpg')),
-	dan: createUser(require('./users/dan.jpg')),
-	pat: createUser(require('./users/pat.jpg')),
-	kevin: createUser(require('./users/kevin.jpg')),
+	schex: createUser(require('./users/schex.jpg'), [
+		'stanford', 'michigan', 'boise-st', 'air-force', 'ohio', 'southern-california', 'north-carolina-st',
+		'louisville', 'boston-college', 'toledo', 'utsa', 'colorado-st', 'southern-miss',
+		'northwestern', 'army', 'arkansas-st', 'western-mich', 'miami-oh', 'old-dominion', 'louisiana-tech'
+	]),
+	dan: createUser(require('./users/dan.jpg'), [
+		'navy', 'pittsburgh', 'oklahoma', 'washington-st', 'georgia-tech', 'memphis', 'hawaii', 'mississippi-st',
+		'ucf', 'south-fla', 'clemson', 'central-mich', 'san-diego-st', 'baylor', 'troy',
+		'vanderbilt', 'arkansas', 'appalachian-st', 'miami-fl', 'indiana'
+	]),
+	pat: createUser(require('./users/pat.jpg'), [
+		'alabama', 'houston', 'oklahoma-st', 'wisconsin', 'lsu', 'virginia-tech', 'georgia', 'north-texas',
+		'kansas-st', 'eastern-mich', 'la-lafayette', 'south-carolina', 'auburn', 'middle-tenn',
+		 'wake-forest', 'wyoming', 'nebraska', 'iowa', 'north-carolina', 'minnesota'
+	]),
+	kevin: createUser(require('./users/kevin.jpg'), [
+		'utah', 'new-mexico', 'tennessee', 'florida', 'temple', 'west-virginia', 'ohio-st', 'byu',
+		'penn-st', 'idaho', 'texas-am', 'colorado', 'florida-st', 'tcu', 'tulsa',
+		'western-ky', 'kentucky', 'south-ala', 'washington', 'maryland'
+	]),
+	// error defaults :)
+	michigan: createUser(require('./users/michigan.png'), [])
 }
 
-function createUser(image) {
+function createUser(image, picksArray) {
+
+	function assignPicks (picksArray) {
+		var ret = {};
+		picksArray.forEach( function(pick) {
+			ret[pick] =  true;
+		});
+		return ret;
+	}
+
 	return ({
-		image: image
+		image: image,
+		picks: assignPicks(picksArray)
 	});
 }
 var teamId = 0;
@@ -101,7 +129,15 @@ function getBowlNameFromOrder(id) {
 }
 
 function getUserForTeam(team) {
-	return USERS.schex;
+	var ret = USERS.michigan;
+	
+	for (var user in USERS) {
+		if (USERS[user].picks && USERS[user].picks[team]) {
+			ret = USERS[user];
+		}
+	};
+	
+	return ret;
 }
 
 function createBowlGame(game, counter) {
