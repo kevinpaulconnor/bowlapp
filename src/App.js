@@ -8,7 +8,17 @@ import * as Actions from './actions';
 /*-----------Components---------------*/
 
 class App extends Component {
-  render() {
+	componentDidMount() {
+		//this.props.actions.initializeGames();
+	}
+
+	render() {
+	
+		function buttonInit() {
+			// will move to componentDidMount in prod
+			this.props.actions.initializeGames();
+		}
+  
     return (
       <div className="App">
         <div className="App-header">
@@ -17,7 +27,8 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button name="getscores" type="button" onClick={this.props.actions.initializeGames}>Get Scores</button>
+        <button name="getscores" type="button" onClick={buttonInit.bind(this)}>Get Scores</button>
+        <span>{this.props.timestamp}</span>
         <Scoreline games={this.props.games} scores={this.props.scores}/>
       </div>
     );
@@ -34,9 +45,9 @@ class Scoreline extends Component {
 				rows.push(
 					<div className="Scoreline"> 
 						<Userline user={game.team1User}/>
-						<Team team={game.team1} score={this.props.scores[game.team1.id]} flip={false}/>
+						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.id]} flip={false}/>
 						<Game game={game} />
-						<Team team={game.team2} score={this.props.scores[game.team2.id]} flip={true}/>
+						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.id]} flip={true}/>
 						<Userline user={game.team2User}/>
 					</div>
 				);
@@ -60,7 +71,7 @@ class Team extends Component {
 	render() {		
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
-		var scoreClassName = 'Team-score';
+		var scoreClassName = 'Team-score' + ' ' + this.props.gameState;
 		var imgContainerClassName = 'Team-imgcontainer';
 		if (this.props.flip) {
 			containerClassName += ' flip';

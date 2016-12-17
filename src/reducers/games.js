@@ -11,7 +11,6 @@ function createUser(image) {
 	});
 }
 var teamId = 0;
-
 var TEAMS = { };
 
 // might no longer need teamId concept
@@ -54,6 +53,7 @@ function createBowlGame(game) {
 		name: getNameFromLocation(game.location),
 		location: gameLocation,
 		stadium: stadiumName,
+		gameState: game.gameState,
 		date: game.startDateDisplay + ' ' + game.startTime,
 		tv: getTVFromLocation(game.location),
 		team1: createTeam(game.home["nameSeo"]),
@@ -64,6 +64,7 @@ function createBowlGame(game) {
 }
 
 function initializeGames(games) {
+	teamId = 0;
 	var state = [];
 	games.forEach( function(game) {
 		state.push(createBowlGame(game));
@@ -78,6 +79,8 @@ export default function(state = initialState, action) {
 	case 'INITIALIZE_GAMES':
 		return [ ...state = initializeGames(action.payload) ]
 		break;
+	case 'REFRESH_SCORES':
+		return state;
 	default:
 	}
 	return state;

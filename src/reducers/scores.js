@@ -1,15 +1,18 @@
-var initialState = {
-	data: {}
+// seems a little awkward
+var initialState = scoreInitializer();
+function scoreInitializer() {
+	var state = {
+		data: {}
+	};
+	for (var i = 1; i<=80; i++) {
+		state.data[i] = "-";
+	}
+	return state;
 }
-for (var i = 1; i<=80; i++) {
-		initialState.data[i] = Math.floor(Math.random() * (50 - 0)) + 0
-}
-export default function(state = initialState, action) {
+export default function(state = scoreInitializer(), action) {
 	switch (action.type) {
-	case 'REQUEST_UPDATE':
-		//console.log(action.payload);
-		//console.log(state);
-		//return { ...state, data: action.payload }
+	case 'REFRESH_SCORES':
+		return [ ...state.data = action.payload ]
 		break;
 	default:
 	}

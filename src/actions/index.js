@@ -1,11 +1,11 @@
 import fetch from 'fetch-jsonp'
 export const INITIALIZE_GAMES = 'INITIALIZE_GAMES';
-export const REQUEST_UPDATE = 'REQUEST_UPDATE';
+export const REFRESH_SCORES = 'REFRESH_SCORES';
 
 const NCAAURL = 'http://data.ncaa.com/jsonp/scoreboard/football/fbs/2016/P/scoreboard.html'
 
-export function initializeGames() {
-    return {
+export function initializeGames(dispatch) {
+		return {
     	type: 'INITIALIZE_GAMES',
     	payload: fetch(NCAAURL)
       .then(response => response.json())
@@ -24,9 +24,9 @@ function _prepareGames(data) {
 
 /*-------------------*/
 
-export function requestUpdate() {
+export function refreshScores() {
     return {
-    	type: 'REQUEST_UPDATE',
+    	type: 'REFRESH_SCORES',
     	payload: fetch(NCAAURL)
       .then(response => response.json())
       .then(data => parseScores(data))
