@@ -2,10 +2,18 @@ import fetch from 'fetch-jsonp'
 import {nameToTeamId} from '../reducers/games.js'
 export const INITIALIZE_GAMES = 'INITIALIZE_GAMES';
 export const REFRESH_SCORES = 'REFRESH_SCORES';
+export const CHANGE_VIEW = 'CHANGE_VIEW';
 
 const NCAAURL = 'http://data.ncaa.com/jsonp/scoreboard/football/fbs/2016/P/scoreboard.html'
 
-export function initializeGames(dispatch) {
+export function changeView() {
+	return {
+		type: "CHANGE_VIEW",
+		payload: {}
+	}
+}
+
+export function initializeGames() {
 		return {
     	type: 'INITIALIZE_GAMES',
     	payload: fetch(NCAAURL)
@@ -48,13 +56,4 @@ function parseScores(data) {
 	});
 	
 	return ret;
-}
-
-function recieveScores(scores) {
-	return {
-		type: 'RECIEVE_SCORES',
-		payload: {
-			
-		}
-	}
 }

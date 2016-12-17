@@ -15,22 +15,26 @@ class App extends Component {
 
 	render() {
 	
-		function buttonInit() {
-			// will move to componentDidMount in prod
-			this.props.actions.refreshScores();
+		function toggleView() {
+		
 		}
-  
+		var renderRoot;
+    if (this.props.otherView === "Standings") {
+	  	renderRoot = <Scoreline games={this.props.games} scores={this.props.scores}/>
+		} else {
+			renderRoot = '';
+		}	
     return (
       <div className="App">
-        <div className="App-header">
-					<h2>Welcome to React</h2>
+        <div className="App-header">	
+        	<button name="getscores" type="button" onClick={this.props.actions.refreshScores}>Get Scores</button>
+        	<button name="toggleview" type="button" onClick={this.props.actions.changeView}>{this.props.otherView}</button>
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button name="getscores" type="button" onClick={buttonInit.bind(this)}>Get Scores</button>
         <span>{this.props.timestamp}</span>
-        <Scoreline games={this.props.games} scores={this.props.scores}/>
+				{renderRoot}
       </div>
     );
   }
@@ -126,7 +130,8 @@ class UserTotal extends Component {
 function mapStateToProps(state) {
   return {
     games: state.games,
-    scores: state.scores
+    scores: state.scores,
+    otherView: state.view.otherView
   };
 }
 
