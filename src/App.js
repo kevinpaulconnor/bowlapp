@@ -9,14 +9,14 @@ import * as Actions from './actions';
 
 class App extends Component {
 	componentDidMount() {
-		//this.props.actions.initializeGames();
+		this.props.actions.initializeGames();
 	}
 
 	render() {
 	
 		function buttonInit() {
 			// will move to componentDidMount in prod
-			this.props.actions.initializeGames();
+			this.props.actions.refreshScores();
 		}
   
     return (
@@ -39,8 +39,7 @@ class Scoreline extends Component {
 
 		render() {
 			var rows = [];
-
-			this.props.games.forEach( 
+			this.props.games.forEach(
 				function(game) {
 				rows.push(
 					<div className="Scoreline"> 
@@ -126,7 +125,7 @@ class UserTotal extends Component {
 function mapStateToProps(state) {
   return {
     games: state.games,
-    scores: state.scores.data
+    scores: state.scores
   };
 }
 

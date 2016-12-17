@@ -1,4 +1,5 @@
 import fetch from 'fetch-jsonp'
+import {nameToTeamId} from '../reducers/games.js'
 export const INITIALIZE_GAMES = 'INITIALIZE_GAMES';
 export const REFRESH_SCORES = 'REFRESH_SCORES';
 
@@ -34,7 +35,19 @@ export function refreshScores() {
 }
 
 function parseScores(data) {
-	console.log(data);
+	var ret = {
+	};
+	var parsedGames = _prepareGames(data);
+	parsedGames.forEach( function(game) {
+		if (game.home.currentScore) {
+			var homeTeamId = nameToTeamId(game.home.nameSeo);
+			var awayTeamId = nameToTeamId(game.away.nameSeo);
+			ret[homeTeamId] = game.home.currentScore;
+			ret[awayTeamId] = game.away.currentScore;
+		}
+	});
+	
+	return ret;
 }
 
 function recieveScores(scores) {

@@ -175,8 +175,6 @@ export default function(state = initialState, action) {
 	case 'INITIALIZE_GAMES':
 		return [ ...state = initializeGames(action.payload) ]
 		break;
-	case 'REFRESH_SCORES':
-		return state;
 	default:
 	}
 	return state;

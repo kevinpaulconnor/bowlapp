@@ -1,18 +1,16 @@
 // seems a little awkward
-var initialState = scoreInitializer();
+const initialState = scoreInitializer();
 function scoreInitializer() {
-	var state = {
-		data: {}
-	};
+	var state = {};
 	for (var i = 1; i<=80; i++) {
-		state.data[i] = "-";
+		state[i] = "-";
 	}
 	return state;
 }
-export default function(state = scoreInitializer(), action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'REFRESH_SCORES':
-		return [ ...state.data = action.payload ]
+		return Object.assign({}, state, action.payload)
 		break;
 	default:
 	}
