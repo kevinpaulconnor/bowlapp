@@ -10,6 +10,7 @@ import * as Actions from './actions';
 class App extends Component {
 	componentDidMount() {
 		this.props.actions.initializeGames();
+		this.props.actions.refreshScores();
 	}
 
 	render() {
