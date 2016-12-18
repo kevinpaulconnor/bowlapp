@@ -1,9 +1,5 @@
-import users from './users'
+import {USERS, PICKTOUSER} from './users'
 
-// this seems like maybe not the right way...
-var USERS = users(undefined,{type:'LOADTOGAMES'});
-
-console.log(USERS);
 function createTeam(name){
 	return {
 		name: name,
@@ -82,15 +78,7 @@ function getBowlNameFromOrder(id) {
 }
 
 function getUserForTeam(team) {
-	var ret = USERS.michigan;
-	
-	for (var user in USERS) {
-		if (USERS[user].picks && USERS[user].picks[team]) {
-			ret = USERS[user];
-		}
-	};
-	
-	return ret;
+	return USERS[PICKTOUSER[team]];
 }
 
 function createBowlGame(game, counter) {
