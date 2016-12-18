@@ -11,7 +11,6 @@ export default function(state = initialState, action) {
 				currentView: state.otherView,
 				otherView: temp
 			}
-		break;
 	default:
 	}
 	return state;

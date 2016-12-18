@@ -5,7 +5,6 @@ export default function(state = initialState, action) {
 	case 'REFRESH_SCORES':
 	case 'INITIALIZE_GAMES':
 		return Object.assign({}, state, action.payload.scores);
-		break;
 	default:
 	}
 	return state;

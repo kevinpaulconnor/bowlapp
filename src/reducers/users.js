@@ -91,7 +91,6 @@ export default function(state = initialState, action) {
 		state.winTotal = Object.assign({}, newWinTotal);
 		state.userPicks = Object.assign({}, state.userPicks, newFinalizedGames);
 		return state;
-		break;
 	default:
 	}
 	return state;

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from './actions';
-import {USERS, PICKTOUSER} from './reducers/users';
+import {USERS} from './reducers/users';
 
 /*-----------Components---------------*/
 
@@ -14,10 +13,6 @@ class App extends Component {
 	}
 
 	render() {
-	
-		function toggleView() {
-		
-		}
 		var renderRoot;
     if (this.props.otherView === "Standings") {
     	//FIXME starting to pass a lot of state along here...
@@ -31,9 +26,6 @@ class App extends Component {
         	<button name="getscores" type="button" onClick={this.props.actions.refreshScores}>Get Scores</button>
         	<button name="toggleview" type="button" onClick={this.props.actions.changeView}>{this.props.otherView}</button>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <span>{this.props.timestamp}</span>
 				{renderRoot}
       </div>
@@ -69,14 +61,14 @@ class Userline extends Component {
 		var userImage = user.image;
 		var userClassName = 'User';
 		if (this.props.gameState) {
-			if (this.props.gameState == 'final') {
-				userClassName += (this.props.pick.result) ? ' winner' : ' loser';
+			if (this.props.gameState === 'final') {
+				userClassName += (this.props.pick.result === true) ? ' winner' : ' loser';
 			} else {
 				userClassName += ' ' + this.props.gameState;
 			}
 		}
 		return (
-			<span className={userClassName}><img src={userImage} className="User-image" alt="userImage" /></span>
+			<span className={userClassName}><img src={userImage} className="User-image" alt="user" /></span>
 		);
 	}
 }
@@ -88,7 +80,7 @@ class Team extends Component {
 	
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
-		var scoreClassName = 'Team-score' + ' ' + this.props.gameState;
+		var scoreClassName = 'Team-score  ' + this.props.gameState;
 		var imgContainerClassName = 'Team-imgcontainer';
 		if (this.props.flip) {
 			containerClassName += ' flip';
@@ -98,7 +90,7 @@ class Team extends Component {
 		
 		var items = [
 			<span key={this.props.team.teamId} className={scoreClassName}>{score}</span>,
-			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
+			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo" alt="logo"/></span>
 		];
 		if (this.props.flip) {
 			items = items.reverse();

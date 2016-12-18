@@ -1,5 +1,3 @@
-import {USERS, PICKTOUSER} from './users'
-
 function createTeam(name){
 	return {
 		name: name,
@@ -77,10 +75,6 @@ function getBowlNameFromOrder(id) {
 	return orderedNames[id] ? orderedNames[id] : 'Undefined Name';
 }
 
-function getUserForTeam(team) {
-	return USERS[PICKTOUSER[team]];
-}
-
 function createBowlGame(game, counter) {
 	var stadiumName = game.location.split(',',1);
 	var gameLocation = game.location.slice(stadiumName[0].length+2, game.location.length);
@@ -112,12 +106,11 @@ export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'INITIALIZE_GAMES':
 		return [ ...state = initializeGames(action.payload.games) ]
-		break;
 	case 'REFRESH_SCORES':
-		for (var game in action.payload.updatedGames) {
-			var gameToUpdate = state.indexOf(game);
-			Object.assign({}, gameToUpdate, game);
-		}
+		Object.keys(action.payload.updatedGames).forEach( function(key) {
+			var gameToUpdate = state.indexOf(action.payload.updatedGames[key]);
+			Object.assign({}, gameToUpdate, action.payload.updatedGames[key]);
+		});
 		return state
 	default:
 	}
