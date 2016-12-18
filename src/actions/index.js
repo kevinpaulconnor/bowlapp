@@ -19,7 +19,7 @@ export function initializeGames() {
     	payload: fetch(NCAAURL)
       .then(response => response.json())
       .then(data => _prepareGames(data))
-      .then(data => parseScores(data))
+      .then(data => _mergeGamesWithScores(data))
     }
 }
 
@@ -39,24 +39,30 @@ export function refreshScores() {
     	type: 'REFRESH_SCORES',
     	payload: fetch(NCAAURL)
       .then(response => response.json())
-      .then(data => parseScores(data))
+      .then(data => _prepareGames(data))
+      .then(data => _prepareScores(data))
     }
 }
 
-function parseScores(data) {
+function _prepareScores(games) {
 	var ret = {
-		games: data,
 		scores: {},
-		gameState: [],
+		updatedGames: []
 	};
-	//var parsedGames = _prepareGames(data);
-	data.forEach( function(game) {
+	
+	games.forEach( function(game) {
 		if (game.home.currentScore) {
 			ret.scores[game.home.nameSeo] = game.home.currentScore;
 			ret.scores[game.away.nameSeo] = game.away.currentScore;
-			ret.gameState.push(game);
+			ret.updatedGames.push(game);
 		}
 	});
-	
+
+	return ret;	
+}
+
+function _mergeGamesWithScores(games) {
+	var ret = _prepareScores(games)
+	ret.games = games;
 	return ret;
 }

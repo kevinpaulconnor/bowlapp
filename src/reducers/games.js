@@ -176,10 +176,10 @@ export default function(state = initialState, action) {
 		return [ ...state = initializeGames(action.payload.games) ]
 		break;
 	case 'REFRESH_SCORES':
-		/*for (var game in action.payload.games) {
+		for (var game in action.payload.updatedGames) {
 			var gameToUpdate = state.indexOf(game);
 			Object.assign({}, gameToUpdate, game);
-		}*/
+		}
 		return state
 	default:
 	}
