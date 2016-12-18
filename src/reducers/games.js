@@ -173,8 +173,14 @@ const initialState = [];
 export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'INITIALIZE_GAMES':
-		return [ ...state = initializeGames(action.payload) ]
+		return [ ...state = initializeGames(action.payload.games) ]
 		break;
+	case 'REFRESH_SCORES':
+		/*for (var game in action.payload.games) {
+			var gameToUpdate = state.indexOf(game);
+			Object.assign({}, gameToUpdate, game);
+		}*/
+		return state
 	default:
 	}
 	return state;

@@ -19,6 +19,7 @@ export function initializeGames() {
     	payload: fetch(NCAAURL)
       .then(response => response.json())
       .then(data => _prepareGames(data))
+      .then(data => parseScores(data))
     }
 }
 
@@ -44,14 +45,16 @@ export function refreshScores() {
 
 function parseScores(data) {
 	var ret = {
+		games: data,
+		scores: {},
+		gameState: [],
 	};
-	var parsedGames = _prepareGames(data);
-	parsedGames.forEach( function(game) {
+	//var parsedGames = _prepareGames(data);
+	data.forEach( function(game) {
 		if (game.home.currentScore) {
-			var homeTeamId = nameToTeamId(game.home.nameSeo);
-			var awayTeamId = nameToTeamId(game.away.nameSeo);
-			ret[homeTeamId] = game.home.currentScore;
-			ret[awayTeamId] = game.away.currentScore;
+			ret.scores[game.home.nameSeo] = game.home.currentScore;
+			ret.scores[game.away.nameSeo] = game.away.currentScore;
+			ret.gameState.push(game);
 		}
 	});
 	

@@ -10,7 +10,6 @@ import * as Actions from './actions';
 class App extends Component {
 	componentDidMount() {
 		this.props.actions.initializeGames();
-		this.props.actions.refreshScores();
 	}
 
 	render() {
@@ -47,12 +46,12 @@ class Scoreline extends Component {
 			this.props.games.forEach(
 				function(game) {
 				rows.push(
-					<div className="Scoreline"> 
-						<Userline user={game.team1User} gameState={game.gameState}/>
-						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.id]} flip={false}/>
+					<div className="Scoreline" key={game.name}> 
+						<Userline user={game.team1User} gameState={game.gameState} team={game.team1}/>
+						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.name]} flip={false}/>
 						<Game game={game} />
-						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.id]} flip={true}/>
-						<Userline user={game.team2User} gameState={game.gameState}/>
+						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.name]} flip={true}/>
+						<Userline user={game.team2User} gameState={game.gameState} team={game.team2}/>
 					</div>
 				);
 			}.bind(this))
@@ -65,7 +64,13 @@ class Scoreline extends Component {
 class Userline extends Component {
 	render() {
 		var userClassName = 'User';
-		userClassName += (this.props.gameState) ? (' ' + this.props.gameState) : '';
+		if (this.props.gameState) {
+			if (this.props.gameState == 'final') {
+				userClassName += (this.props.team.winner) ? ' winner' : ' loser';
+			} else {
+				userClassName += ' ' + this.props.gameState;
+			}
+		}
 		return (
 			<span className={userClassName}><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
 		);
@@ -75,6 +80,8 @@ class Userline extends Component {
 class Team extends Component {
 
 	render() {		
+		var score = this.props.score ? this.props.score : "-";
+	
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
 		var scoreClassName = 'Team-score' + ' ' + this.props.gameState;
@@ -86,7 +93,7 @@ class Team extends Component {
 		}
 		
 		var items = [
-			<span className={scoreClassName}>{this.props.score}</span>,
+			<span key={this.props.team.teamId} className={scoreClassName}>{score}</span>,
 			<span className={imgContainerClassName}><img src={this.props.team.logo} className="Team-logo"/></span>
 		];
 		if (this.props.flip) {
@@ -94,7 +101,7 @@ class Team extends Component {
 		}
 
 		return (
-			<span className={containerClassName}>{items}</span>
+			<span key={this.props.team.teamId} className={containerClassName}>{items}</span>
 		);
 	}
 }
