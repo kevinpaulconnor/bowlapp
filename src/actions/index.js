@@ -1,5 +1,4 @@
 import fetch from 'fetch-jsonp'
-import {nameToTeamId} from '../reducers/games.js'
 export const INITIALIZE_GAMES = 'INITIALIZE_GAMES';
 export const REFRESH_SCORES = 'REFRESH_SCORES';
 export const CHANGE_VIEW = 'CHANGE_VIEW';
@@ -47,7 +46,8 @@ export function refreshScores() {
 function _prepareScores(games) {
 	var ret = {
 		scores: {},
-		updatedGames: []
+		updatedGames: [],
+		finalizedGames: []
 	};
 	
 	games.forEach( function(game) {
@@ -55,6 +55,9 @@ function _prepareScores(games) {
 			ret.scores[game.home.nameSeo] = game.home.currentScore;
 			ret.scores[game.away.nameSeo] = game.away.currentScore;
 			ret.updatedGames.push(game);
+		}
+		if (game.gameStatus === 'Final') {
+			ret.finalizedGames.push(game);
 		}
 	});
 
