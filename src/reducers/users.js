@@ -88,41 +88,24 @@ export default function(state = initialState, action) {
 	case 'INITIALIZE_GAMES':
 		console.log(action.payload);
 		var newWinTotal = Object.assign({}, state.winTotal);
+		var finalizedGames = {};
 		action.payload.finalizedGames.forEach( function(game) {
 			var homePicker = PICKTOUSER[game.home.nameSeo];
 			var awayPicker = PICKTOUSER[game.away.nameSeo];
 			if (game.home.winner === 'true') {
 				newWinTotal[homePicker]++;
+				finalizedGames[game.home.nameSeo] = createPick(true, homePicker);
+				finalizedGames[game.away.nameSeo] = createPick(false, awayPicker);
 			} else {
 				newWinTotal[awayPicker]++;
+				finalizedGames[game.home.nameSeo] = createPick(false, homePicker);
+				finalizedGames[game.away.nameSeo] = createPick(true, awayPicker);
 			}
 		});
-				/*var homePicker = keyedPicks[game.home.nameSeo];
-				var awayPicker = keyedPicks[game.away.nameSeo];
-				console.log(homePicker);
-				pickers[homePicker.name].push({
-					pick: game.home.nameSeo,
-					result: (game.home.winner == "true")
-				});
-				pickers[awayPicker.name].push({
-					pick: game.away.nameSeo,
-					result: (game.away.winner == "true")
-				})*/
-	/*	for (var user in pickers) {
-			var newTotalWins = state[user].winTotal;
-			var self = user;
-			pickers[user].forEach( function (pick) {
-				if (pick.result === true) {
-					newTotalWins++;
-				}
-				var pickToUpdate = state[self].picks.indexOf(keyedPicks[pick.pick])
-				//state.dan.picks.indexOf(keyedPicks["washington-st"])
-				state[self].picks[pickToUpdate] = Object.assign({}, state[self].picks[pickToUpdate], pick)
-			})
-			state[self] = Object.assign({}, state[self], {winTotal: newTotalWins});
-		}*/
+
 		// already created newWinTotal from current state win total
-		state.winTotal = Object.assign({}, newWinTotal)
+		state.winTotal = Object.assign({}, newWinTotal);
+		state.userPicks = Object.assign({}, state.userPicks, finalizedGames);
 		console.log(state);
 		return state;
 		break;
