@@ -92,9 +92,7 @@ function createBowlGame(game, counter) {
 		date: game.startDateDisplay + ' ' + game.startTime,
 		tv: getTVFromHomeTeam(game.home["nameSeo"]),
 		team1: createTeam(game.home["nameSeo"]),
-		team2: createTeam(game.away["nameSeo"]),
-		team1User: getUserForTeam(game.home["nameSeo"]),
-		team2User: getUserForTeam(game.away["nameSeo"])
+		team2: createTeam(game.away["nameSeo"])
 	});
 }
 
