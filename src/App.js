@@ -16,9 +16,9 @@ class App extends Component {
 		var renderRoot;
     if (this.props.otherView === "Standings") {
     	//FIXME starting to pass a lot of state along here...
-	  	renderRoot = <Scoreline userPicks={this.props.users.userPicks} games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
+	  	renderRoot = <Scoreline userPicks={this.props.userState.userPicks} games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
 		} else {
-			renderRoot = <Standings users={this.props.users} />
+			renderRoot = <Standings userState={this.props.userState} />
 		}	
     return (
       <div className="App">
@@ -57,7 +57,7 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
-		var user = this.props.user ? this.props.user : USERS[this.props.pick.user];
+		var user = this.props.userId ? USERS[this.props.userId] : USERS[this.props.pick.user];
 		var userImage = user.image;
 		var userClassName = 'User';
 		if (this.props.gameState) {
@@ -121,10 +121,10 @@ class Game extends Component {
 class Standings extends Component {
 	render() {
 		var sortByWins = [];
-		var self = this.props.users;
-		Object.keys(self.winTotal).forEach( function(key) {
+		var myState = this.props.userState;
+		Object.keys(myState.winTotal).forEach( function(key) {
 			sortByWins.push({
-				total: self.winTotal[key],
+				total: myState.winTotal[key],
 				user: USERS[key],
 				id: key
 			});
@@ -143,7 +143,8 @@ class Standings extends Component {
 		
 		var rows = [];
 		sortByWins.forEach( function(item) {
-			rows.push( <Standingsline key={item.user.id} user={item.user} />);
+			// FIXME: probably not the best way to pass these properties down
+			rows.push( <Standingsline key={item.user.id} userState={myState} userId={item.id}/>);
 		});
 		return(
 			<div className="Standings-container">{rows}</div>
@@ -155,23 +156,46 @@ class Standingsline extends Component {
 	render() {
 		return (
 			<div className="Standingsline">
-			<Userline user={this.props.user}/>
+			<Userline userState={this.props.userState} userId={this.props.userId}/>
+			<UserPicks userState={this.props.userState} userId={this.props.userId}/>
+			<UserTotal userState={this.props.userState} userId={this.props.userId}/>
 			</div>
 		)
 	}
 }
 
 class UserPicks extends Component {
-
+	render() {
+		var user = USERS[this.props.userId];
+		var items = [];
+		user.pickOrder.forEach( function(pick) {
+			items.push(buildPickForDisplay(pick));
+		});
+		
+		function buildPickForDisplay(pick) {
+			return <span className="UserPicks-pick">{pick}</span>;
+		}
+	
+		return (
+			<span className="UserPicks">
+			{items}
+			</span>
+		)
+	}
 }
 
 class UserTotal extends Component {
-
+	render() {
+		console.log(this.props);
+		return (
+			<span className="UserTotal">{this.props.userState.winTotal[this.props.userId]}</span>
+		)
+	}
 }
 
 function mapStateToProps(state) {
   return {
-  	users: state.users,
+  	userState: state.users,
     games: state.games,
     scores: state.scores,
     otherView: state.view.otherView
