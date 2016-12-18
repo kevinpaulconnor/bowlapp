@@ -4,6 +4,7 @@ import './App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from './actions';
+import {USERS, PICKTOUSER} from './reducers/users';
 
 /*-----------Components---------------*/
 
@@ -19,7 +20,8 @@ class App extends Component {
 		}
 		var renderRoot;
     if (this.props.otherView === "Standings") {
-	  	renderRoot = <Scoreline games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
+    	//FIXME starting to pass a lot of state along here...
+	  	renderRoot = <Scoreline userPicks={this.props.users.userPicks} games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
 		} else {
 			renderRoot = <Standings users={this.props.users} />
 		}	
@@ -47,11 +49,11 @@ class Scoreline extends Component {
 				function(game) {
 				rows.push(
 					<div className="Scoreline" key={game.name}> 
-						<Userline user={game.team1User} gameState={game.gameState} team={game.team1}/>
+						<Userline pick={this.props.userPicks[game.team1.name]} gameState={game.gameState} />
 						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.name]} flip={false}/>
 						<Game game={game} />
 						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.name]} flip={true}/>
-						<Userline user={game.team2User} gameState={game.gameState} team={game.team2}/>
+						<Userline pick={this.props.userPicks[game.team2.name]} gameState={game.gameState} />
 					</div>
 				);
 			}.bind(this))
@@ -63,16 +65,18 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
+		var user = USERS[this.props.pick.user];
+		var userImage = user.image;
 		var userClassName = 'User';
 		if (this.props.gameState) {
 			if (this.props.gameState == 'final') {
-				userClassName += (this.props.team.winner) ? ' winner' : ' loser';
+				userClassName += (this.props.pick.result) ? ' winner' : ' loser';
 			} else {
 				userClassName += ' ' + this.props.gameState;
 			}
 		}
 		return (
-			<span className={userClassName}><img src={this.props.user.image} className="User-image" alt="userImage" /></span>
+			<span className={userClassName}><img src={userImage} className="User-image" alt="userImage" /></span>
 		);
 	}
 }
