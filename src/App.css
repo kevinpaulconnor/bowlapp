@@ -20,7 +20,10 @@
 
 .User {
 	flex-basis: 150px;
+}
 
+.Standings-container .User {
+	border: 5px solid black;
 }
 
 .User.pre {
@@ -110,7 +113,8 @@
 	font-size: 24px;
 }
 
-.Scoreline {
+.Scoreline,
+.Standingsline {
 	margin: 5px auto 5px;
 	flex-basis: 1000px;
 	display: flex;

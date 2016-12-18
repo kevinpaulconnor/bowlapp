@@ -57,7 +57,7 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
-		var user = USERS[this.props.pick.user];
+		var user = this.props.user ? this.props.user : USERS[this.props.pick.user];
 		var userImage = user.image;
 		var userClassName = 'User';
 		if (this.props.gameState) {
@@ -120,16 +120,45 @@ class Game extends Component {
 
 class Standings extends Component {
 	render() {
-		var users = this.props.users.sort(function(a,b) {a.total > b.total});
+		var sortByWins = [];
+		var self = this.props.users;
+		Object.keys(self.winTotal).forEach( function(key) {
+			sortByWins.push({
+				total: self.winTotal[key],
+				user: USERS[key],
+				id: key
+			});
+		});
+		sortByWins.sort(function (a,b) {
+			// super awkward sort fxn in javascript, ugh
+			// TODO: break ties in here
+			if (a.total < b.total) {
+				return 1;
+			}
+			if (a.total > b.total) {
+				return -1;
+			}
+			return 0;
+		});
+		
 		var rows = [];
-		users.props.forEach( function(user) {
-			rows.push( <Userline user={user} />);
+		sortByWins.forEach( function(item) {
+			rows.push( <Standingsline key={item.user.id} user={item.user} />);
 		});
 		return(
-			{rows}
+			<div className="Standings-container">{rows}</div>
 		)
 	}
+}
 
+class Standingsline extends Component {
+	render() {
+		return (
+			<div className="Standingsline">
+			<Userline user={this.props.user}/>
+			</div>
+		)
+	}
 }
 
 class UserPicks extends Component {
