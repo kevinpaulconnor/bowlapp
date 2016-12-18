@@ -67,41 +67,29 @@ function createPick(result, user) {
 	}
 }
 
-function createUserPicks(pickNames) {
-	var ret = []
-	pickNames.forEach( function(pick) {
-		ret.push({
-				selected: true,
-				result: undefined,
-				pick: pick
-		});
-	});
-	return ret;
-}
-
 export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'REFRESH_SCORES':
 	case 'INITIALIZE_GAMES':
 		var newWinTotal = Object.assign({}, state.winTotal);
-		var finalizedGames = {};
+		var newFinalizedGames = {};
 		action.payload.finalizedGames.forEach( function(game) {
 			var homePicker = PICKTOUSER[game.home.nameSeo];
 			var awayPicker = PICKTOUSER[game.away.nameSeo];
 			if (game.home.winner === 'true') {
 				newWinTotal[homePicker]++;
-				finalizedGames[game.home.nameSeo] = createPick(true, homePicker);
-				finalizedGames[game.away.nameSeo] = createPick(false, awayPicker);
+				newFinalizedGames[game.home.nameSeo] = createPick(true, homePicker);
+				newFinalizedGames[game.away.nameSeo] = createPick(false, awayPicker);
 			} else {
 				newWinTotal[awayPicker]++;
-				finalizedGames[game.home.nameSeo] = createPick(false, homePicker);
-				finalizedGames[game.away.nameSeo] = createPick(true, awayPicker);
+				newFinalizedGames[game.home.nameSeo] = createPick(false, homePicker);
+				newFinalizedGames[game.away.nameSeo] = createPick(true, awayPicker);
 			}
 		});
 
 		// already created newWinTotal from current state win total
 		state.winTotal = Object.assign({}, newWinTotal);
-		state.userPicks = Object.assign({}, state.userPicks, finalizedGames);
+		state.userPicks = Object.assign({}, state.userPicks, newFinalizedGames);
 		return state;
 		break;
 	default:
