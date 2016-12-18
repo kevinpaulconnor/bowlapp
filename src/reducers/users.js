@@ -57,7 +57,6 @@ function initializePickState() {
 		var pickKey = PICKTOUSER[pick];
 		ret[pick] = createPick(undefined, pickKey)
 	});
-	console.log(ret);
 	return ret;
 }
 
@@ -80,13 +79,10 @@ function createUserPicks(pickNames) {
 	return ret;
 }
 
-
-
 export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'REFRESH_SCORES':
 	case 'INITIALIZE_GAMES':
-		console.log(action.payload);
 		var newWinTotal = Object.assign({}, state.winTotal);
 		var finalizedGames = {};
 		action.payload.finalizedGames.forEach( function(game) {
@@ -106,7 +102,6 @@ export default function(state = initialState, action) {
 		// already created newWinTotal from current state win total
 		state.winTotal = Object.assign({}, newWinTotal);
 		state.userPicks = Object.assign({}, state.userPicks, finalizedGames);
-		console.log(state);
 		return state;
 		break;
 	default:
