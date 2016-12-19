@@ -71,7 +71,15 @@ export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'REFRESH_SCORES':
 	case 'INITIALIZE_GAMES':
-		var newWinTotal = Object.assign({}, state.winTotal);
+		// not crazy about this
+		// FIXME: find a way to increment rather than re-init
+		// need to handle at action level perhaps?
+		var newWinTotal = {
+			schex: 0,
+			dan: 0,
+			pat: 0,
+			kevin: 0
+		}
 		var newFinalizedGames = {};
 		action.payload.finalizedGames.forEach( function(game) {
 			var homePicker = PICKTOUSER[game.home.nameSeo];
@@ -88,7 +96,7 @@ export default function(state = initialState, action) {
 		});
 
 		// already created newWinTotal from current state win total
-		state.winTotal = Object.assign({}, newWinTotal);
+		state.winTotal = Object.assign({}, state.winTotal, newWinTotal);
 		state.userPicks = Object.assign({}, state.userPicks, newFinalizedGames);
 		return state;
 	default:

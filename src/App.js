@@ -186,7 +186,6 @@ class UserPicks extends Component {
 
 class UserTotal extends Component {
 	render() {
-		console.log(this.props);
 		return (
 			<span className="UserTotal">{this.props.userState.winTotal[this.props.userId]}</span>
 		)
