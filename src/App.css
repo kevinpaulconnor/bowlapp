@@ -46,7 +46,12 @@
 }
 
 .UserTotal {
+	font-size: 5vw;
+	margin: 0 1.5vw;
+}
 
+.Tiebreaker {
+	font-size: 2vw;
 }
 
 .User.pre {

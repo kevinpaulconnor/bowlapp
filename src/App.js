@@ -229,10 +229,13 @@ class Tiebreaker extends Component {
 			tiebreakingTeam = TEAMS[user.pickOrder[tiebreakerIndex]].displayName
 		}
 		
-		var tiebreakerDisplayText = '#'+this.props.userState.tiebreaker[this.props.userId].order +
-																	' tiebreaker, ' + tiebreakingTeam + '.';
+		var tiebreakerDisplayOrder = '#'+this.props.userState.tiebreaker[this.props.userId].order +
+																	' tiebreaker';
+		var tiebreakerDisplayTeam = '(' + tiebreakingTeam + ')';
+		var displayGamesRemaining = this.props.userState.gamesRemaining[this.props.userId] +
+																	" game(s) remaining"
 		return (
-			<span className="Tiebreaker">{tiebreakerDisplayText}</span>
+			<span className="Tiebreaker">{tiebreakerDisplayOrder} <br/> {tiebreakerDisplayTeam} <br/> {displayGamesRemaining}</span>
 		)
 	}
 }
