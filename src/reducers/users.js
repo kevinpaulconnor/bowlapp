@@ -95,7 +95,6 @@ export default function(state = initialState, action) {
 			}
 		});
 
-		// already created newWinTotal from current state win total
 		state.winTotal = Object.assign({}, state.winTotal, newWinTotal);
 		state.userPicks = Object.assign({}, state.userPicks, newFinalizedGames);
 		return state;
