@@ -27,11 +27,13 @@
 }
 
 .UserPicks {
-	width: 400px;
+	flex-basis: 400px;
+	flex-grow: 2;
 }
 
 .UserPicks-pick {
 	margin-right: 2px;
+	font-size: 2.25vw;
 }
 .UserPicks-pick.notFinal {
 	color: gray;
