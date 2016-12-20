@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from './actions';
 import {USERS} from './reducers/users';
+import {TEAMS} from './reducers/games';
 
 /*-----------Components---------------*/
 
@@ -176,12 +177,24 @@ class UserPicks extends Component {
 	render() {
 		var user = USERS[this.props.userId];
 		var items = [];
-		user.pickOrder.forEach( function(pick) {
-			items.push(buildPickForDisplay(pick));
+		var myPickState = this.props.userState.userPicks;
+		user.pickOrder.forEach( function(pick, index) {
+			items.push(buildPickForDisplay(pick, myPickState[pick], (index < user.pickOrder.length-1)));
 		});
 		
-		function buildPickForDisplay(pick) {
-			return <span className="UserPicks-pick">{pick}</span>;
+		function buildPickForDisplay(pick, pickState, notLast) {
+			var displayName = TEAMS[pick].displayName;
+			if (notLast) {
+				displayName += ',';
+			}
+			var resultClass = 'notFinal';
+			if (pickState.result === true) {
+				resultClass = 'won';
+			} else if (pickState.result === false) {
+				resultClass = 'lost';
+			}
+			var className = "UserPicks-pick " + resultClass;
+			return <span className={className}>{displayName}</span>;
 		}
 	
 		return (

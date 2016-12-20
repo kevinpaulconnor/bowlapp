@@ -1,8 +1,13 @@
-function createTeam(name){
-	return {
+export var TEAMS = {};
+
+function createTeam(name, displayName){
+	var ret = {
 		name: name,
+		displayName: displayName,
 		logo: getLogoForName(name),
 	}
+	TEAMS[name] = ret;
+	return ret;
 }
 
 function getLogoForName(name) {
@@ -85,8 +90,8 @@ function createBowlGame(game, counter) {
 		gameState: game.gameState,
 		date: game.startDateDisplay + ' ' + game.startTime,
 		tv: getTVFromHomeTeam(game.home["nameSeo"]),
-		team1: createTeam(game.home["nameSeo"]),
-		team2: createTeam(game.away["nameSeo"])
+		team1: createTeam(game.home["nameSeo"], game.home["nameRaw"]),
+		team2: createTeam(game.away["nameSeo"], game.away["nameRaw"])
 	});
 }
 

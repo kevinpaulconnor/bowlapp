@@ -30,6 +30,19 @@
 	width: 400px;
 }
 
+.UserPicks-pick {
+	margin-right: 2px;
+}
+.UserPicks-pick.notFinal {
+	color: gray;
+}
+.UserPicks-pick.won {
+	color: green;
+}
+.UserPicks-pick.lost {
+	color: red;
+}
+
 .UserTotal {
 
 }
