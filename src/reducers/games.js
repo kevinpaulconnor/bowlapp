@@ -81,7 +81,7 @@ function createBowlGame(game, counter) {
 	return ({
 		name: getBowlNameFromOrder(counter),
 		location: gameLocation,
-		stadium: stadiumName,
+		stadium: stadiumName[0],
 		gameState: game.gameState,
 		date: game.startDateDisplay + ' ' + game.startTime,
 		tv: getTVFromHomeTeam(game.home["nameSeo"]),

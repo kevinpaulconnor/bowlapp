@@ -108,8 +108,7 @@ class Game extends Component {
 		// this is magic-numbery. Relate this # of allowed characters to font size.
 		// Allows size of Game to be determined by timestamp
 		var maxLength = 26;
-		//INVESTIGATE: It is a surprise that this is an array...
-		var renderedStadium = this.props.game.stadium[0]
+		var renderedStadium = this.props.game.stadium
 		if (renderedStadium.length > maxLength) {
 			renderedStadium = renderedStadium.slice(0, maxLength-3)+"...";
 		}
