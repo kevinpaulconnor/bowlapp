@@ -63,6 +63,10 @@
 	font-weight: bold;
 }
 
+.Game-stadium {
+	font-size: 1.5vw;
+}
+
 .Team-container {
 	flex-basis: 175px;
 	flex-grow: 2;

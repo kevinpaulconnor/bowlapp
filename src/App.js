@@ -105,10 +105,19 @@ class Team extends Component {
 class Game extends Component {
 		
 	render() {
+		// this is magic-numbery. Relate this # of allowed characters to font size.
+		// Allows size of Game to be determined by timestamp
+		var maxLength = 26;
+		//INVESTIGATE: It is a surprise that this is an array...
+		var renderedStadium = this.props.game.stadium[0]
+		if (renderedStadium.length > maxLength) {
+			renderedStadium = renderedStadium.slice(0, maxLength-3)+"...";
+		}
+	
 		return (
 			<div className="Game-container">
 			<div className="Game-bowlname">{this.props.game.name}</div>
-			<div className="Game-stadium">{this.props.game.stadium}</div>
+			<div className="Game-stadium">{renderedStadium}</div>
 			<div className="Game-location">{this.props.game.location}</div>				
 			<div className="Game-tv">{this.props.game.tv}</div>
 			<div className="Game-date">{this.props.game.date}</div>
