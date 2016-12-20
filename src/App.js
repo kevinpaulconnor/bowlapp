@@ -147,6 +147,15 @@ class Standings extends Component {
 			if (a.total > b.total) {
 				return -1;
 			}
+			if (a.total === b.total) {
+					console.log(myState.tiebreaker[a.id].order, myState.tiebreaker[b.id].order);
+				if (myState.tiebreaker[a.id].order > myState.tiebreaker[b.id].order) {
+					return 1;
+				}
+				if (myState.tiebreaker[a.id].order < myState.tiebreaker[b.id].order) {
+					return -1;
+				}
+			}
 			return 0;
 		});
 		
@@ -166,8 +175,9 @@ class Standingsline extends Component {
 		return (
 			<div className="Standingsline">
 			<Userline userState={this.props.userState} userId={this.props.userId}/>
-			<UserPicks userState={this.props.userState} userId={this.props.userId}/>
-			<UserTotal userState={this.props.userState} userId={this.props.userId}/>
+			<UserPicks userState={this.props.userState} userId={this.props.userId}/>			
+			<span className="UserTotal">{this.props.userState.winTotal[this.props.userId]}</span>
+			<Tiebreaker userState={this.props.userState} userId={this.props.userId}/>
 			</div>
 		)
 	}
@@ -205,10 +215,24 @@ class UserPicks extends Component {
 	}
 }
 
-class UserTotal extends Component {
+class Tiebreaker extends Component {
 	render() {
+		var user = USERS[this.props.userId];
+		var myPickState = this.props.userState.userPicks;
+		var tiebreakerIndex;
+		var tiebreakingResult = user.pickOrder.some( function(pick, index) {
+			tiebreakerIndex = index;
+			return(myPickState[pick].result === false);
+		});
+		var tiebreakingTeam = 'No losses yet';
+		if (tiebreakingResult) {
+			tiebreakingTeam = TEAMS[user.pickOrder[tiebreakerIndex]].displayName
+		}
+		
+		var tiebreakerDisplayText = '#'+this.props.userState.tiebreaker[this.props.userId].order +
+																	' tiebreaker, ' + tiebreakingTeam + '.';
 		return (
-			<span className="UserTotal">{this.props.userState.winTotal[this.props.userId]}</span>
+			<span className="Tiebreaker">{tiebreakerDisplayText}</span>
 		)
 	}
 }
