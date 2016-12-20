@@ -156,7 +156,7 @@ export default function(state = initialState, action) {
 				newTiebreaker[item.key].order = newTiebreaker[sortArray[index-1].key].order;
 			} else {
 			// not tied on tiebreaker
-				newTiebreaker[item.key] = index+1;
+				newTiebreaker[item.key].order = index+1;
 			}
 		});
 		
