@@ -99,8 +99,12 @@ function initializeGames(games) {
 	var state = [];
 	var counter = 0;
 	games.forEach( function(game) {
-		state.push(createBowlGame(game, counter));
-		counter++;
+		//FRAGILE. Hopefully next year's api has a better way to filter out championship
+		if (game.startDateDisplay === "Jan. 9") {
+		} else {
+			state.push(createBowlGame(game, counter));
+			counter++;
+		}
 	});
 	return state;
 }
