@@ -128,8 +128,9 @@
 .Team-score.pre {
 	color: gray;
 }
-
-.Team-score.live {
+/* FIXME: decide when to use my identifiers, and when to use api
+inconsistent right now-sometimes In-Progress, sometimes live */
+.Team-score.In-Progress {
 	color: blue;
 }
 

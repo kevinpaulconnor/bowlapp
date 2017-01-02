@@ -11,7 +11,11 @@ function createTeam(name, displayName){
 }
 
 function getLogoForName(name) {
-	return require('./logos/'+ name +'.png');
+	if (name === 'team') {
+		return undefined;
+	} else {
+		return require('./logos/'+ name +'.png');
+	}
 }
 
 function getTVFromHomeTeam(teamName) {
@@ -33,9 +37,8 @@ function getTVFromHomeTeam(teamName) {
 	}
 }
 
-function getBowlNameFromOrder(id) {
-	// fragile and hate this, but NCAA Api isn't including names
-	var orderedNames = [
+// fragile and hate this, but NCAA Api isn't including names
+const orderedNames = [
 		'New Mexico Bowl',
 		'Las Vegas Bowl',
 		'Camellia Bowl',
@@ -76,18 +79,30 @@ function getBowlNameFromOrder(id) {
 		'Cotton Bowl',
 		'Rose Bowl',
 		'Sugar Bowl'
-	];
+];
+
+function getBowlNameFromOrder(id) {
 	return orderedNames[id] ? orderedNames[id] : 'Undefined Name';
 }
 
 function createBowlGame(game, counter) {
+	if (game === null) {
+		game = {
+			location: "-,-",
+			name: '-',
+			stadium: '-',
+			date: '-',
+			tv: '-',
+			home: {nameSeo: "team", nameRaw: "Team"},
+			away: {nameSeo: "team", nameRaw: "Team"}
+		}
+	}
 	var stadiumName = game.location.split(',',1);
 	var gameLocation = game.location.slice(stadiumName[0].length+2, game.location.length);
 	return ({
 		name: getBowlNameFromOrder(counter),
 		location: gameLocation,
 		stadium: stadiumName[0],
-		gameState: game.gameState,
 		date: game.startDateDisplay + ' ' + game.startTime,
 		tv: getTVFromHomeTeam(game.home["nameSeo"]),
 		team1: createTeam(game.home["nameSeo"], game.home["nameRaw"]),
@@ -109,17 +124,20 @@ function initializeGames(games) {
 	return state;
 }
 
-const initialState = [];
+const initialState = {
+	games: [ createBowlGame(null) ],
+	gameState: orderedNames.map(function() { return 'pre'})
+};
 
 export default function(state = initialState, action) {
 	switch (action.type) {
 	case 'INITIALIZE_GAMES':
-		return [ ...state = initializeGames(action.payload.games) ]
+		// _ is a Swift-ism...not sure convention for supressed return in javascript
+		var _ = [ ...state.games = initializeGames(action.payload.games) ];
+		_ = [ ...state.gameState = action.payload.gameState ];
+		return state;
 	case 'REFRESH_SCORES':
-		Object.keys(action.payload.updatedGames).forEach( function(key) {
-			var gameToUpdate = state.indexOf(action.payload.updatedGames[key]);
-			Object.assign({}, gameToUpdate, action.payload.updatedGames[key]);
-		});
+		_ = [ ...state.gameState = action.payload.gameState ];
 		return state
 	default:
 	}

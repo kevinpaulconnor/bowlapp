@@ -17,7 +17,7 @@ class App extends Component {
 		var renderRoot;
     if (this.props.otherView === "Standings") {
     	//FIXME starting to pass a lot of state along here...
-	  	renderRoot = <Scoreline userPicks={this.props.userState.userPicks} games={this.props.games} scores={this.props.scores} otherView={this.props.otherView}/>
+	  	renderRoot = <Scoreline userPicks={this.props.userState.userPicks} games={this.props.games} gameState={this.props.gameState} scores={this.props.scores} otherView={this.props.otherView}/>
 		} else {
 			renderRoot = <Standings userState={this.props.userState} />
 		}	
@@ -39,14 +39,14 @@ class Scoreline extends Component {
 		render() {
 			var rows = [];
 			this.props.games.forEach(
-				function(game) {
+				function(game, index) {
 				rows.push(
 					<div className="Scoreline" key={game.name}> 
-						<Userline pick={this.props.userPicks[game.team1.name]} gameState={game.gameState} />
-						<Team team={game.team1} gameState={game.gameState} score={this.props.scores[game.team1.name]} flip={false}/>
+						<Userline pick={this.props.userPicks[game.team1.name]} gameState={this.props.gameState[index]} />
+						<Team team={game.team1} gameState={this.props.gameState[index]} score={this.props.scores[game.team1.name]} flip={false}/>
 						<Game game={game} />
-						<Team team={game.team2} gameState={game.gameState} score={this.props.scores[game.team2.name]} flip={true}/>
-						<Userline pick={this.props.userPicks[game.team2.name]} gameState={game.gameState} />
+						<Team team={game.team2} gameState={this.props.gameState[index]} score={this.props.scores[game.team2.name]} flip={true}/>
+						<Userline pick={this.props.userPicks[game.team2.name]} gameState={this.props.gameState[index]} />
 					</div>
 				);
 			}.bind(this))
@@ -58,27 +58,44 @@ class Scoreline extends Component {
 
 class Userline extends Component {
 	render() {
-		var user = this.props.userId ? USERS[this.props.userId] : USERS[this.props.pick.user];
-		var userImage = user.image;
-		var userClassName = 'User';
-		if (this.props.gameState) {
-			if (this.props.gameState === 'final') {
-				userClassName += (this.props.pick.result === true) ? ' winner' : ' loser';
-			} else {
-				userClassName += ' ' + this.props.gameState;
+		function findUser(props) {
+			if (props.userId) {
+				return USERS[props.userId]
+			} else if (props.pick) {
+				return USERS[props.pick.user]
 			}
+			
+			return null;
+		} 
+	
+		var user = findUser(this.props);
+		if (user != null ) {
+			var userImage = user.image;
+			var userClassName = 'User';
+			if (this.props.gameState) {
+				if (this.props.gameState === 'Final') {
+					userClassName += (this.props.pick.result === true) ? ' winner' : ' loser';
+				} else if (this.props.gameState === 'In-Progress'){
+					userClassName += ' live';
+				}
+				else {
+					userClassName += ' ' + this.props.gameState;
+				}
+			}
+			return (
+				<span className={userClassName}><img src={userImage} className="User-image" alt="user" /></span>
+			);
+		} else {
+			return null
 		}
-		return (
-			<span className={userClassName}><img src={userImage} className="User-image" alt="user" /></span>
-		);
 	}
 }
 
 class Team extends Component {
 
 	render() {		
-		var score = this.props.score ? this.props.score : "-";
-	
+		var score = this.props.score ? this.props.score : "-";	
+		console.log(score, this.props.gameState)
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
 		var scoreClassName = 'Team-score  ' + this.props.gameState;
@@ -243,7 +260,8 @@ class Tiebreaker extends Component {
 function mapStateToProps(state) {
   return {
   	userState: state.users,
-    games: state.games,
+    games: state.games.games,
+    gameState: state.games.gameState,
     scores: state.scores,
     otherView: state.view.otherView
   };
