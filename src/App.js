@@ -94,8 +94,7 @@ class Userline extends Component {
 class Team extends Component {
 
 	render() {		
-		var score = this.props.score ? this.props.score : "-";	
-		console.log(score, this.props.gameState)
+		var score = this.props.score ? this.props.score : "-";
 		//FIXME: wet code
 		var containerClassName = 'Team-container';
 		var scoreClassName = 'Team-score  ' + this.props.gameState;
@@ -165,7 +164,6 @@ class Standings extends Component {
 				return -1;
 			}
 			if (a.total === b.total) {
-					console.log(myState.tiebreaker[a.id].order, myState.tiebreaker[b.id].order);
 				if (myState.tiebreaker[a.id].order > myState.tiebreaker[b.id].order) {
 					return 1;
 				}
